@@ -215,6 +215,84 @@
     details.faq[open] summary::before { content: "– "; }
     details.faq p { margin: 10px 0 0; color: var(--muted); font-size: 0.95rem; }
 
+    .email-mock {
+      margin: 18px 0 8px;
+      background: #eef1f4;
+      border-radius: 12px;
+      padding: 14px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    .email-mock .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .email-window {
+      background: #fff;
+      border: 1px solid #d5dde5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .email-chrome {
+      background: #f4f6f8;
+      border-bottom: 1px solid #e2e8ee;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .email-chrome .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #c9d2db;
+    }
+    .email-chrome .app-name {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    .email-meta {
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid #eef1f4;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .email-meta strong { color: var(--ink); font-weight: 600; }
+    .email-meta .subject {
+      margin-top: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .email-body {
+      padding: 16px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .email-body p { margin: 0 0 12px; }
+    .email-body p:last-child { margin-bottom: 0; }
+    .email-body .btn {
+      display: inline-block;
+      margin: 4px 0 12px;
+      background: var(--accent);
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 6px;
+    }
+    .email-body .muted { color: var(--muted); font-size: 12.5px; }
+    .email-body ul {
+      margin: 0 0 12px;
+      padding-left: 1.2em;
+    }
+    .email-body li { margin-bottom: 4px; }
+
     footer {
       margin-top: 48px;
       padding-top: 20px;
@@ -427,6 +505,41 @@
         </div>
       </div>
 
+      <div class="email-mock">
+        <p class="label">Sample email the client receives (step 5 — automated acknowledgment)</p>
+        <div class="email-window">
+          <div class="email-chrome">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="app-name">Official firm email · Inbox</span>
+          </div>
+          <div class="email-meta">
+            <div><strong>From:</strong> enquiries@yourfirm.co.uk</div>
+            <div><strong>To:</strong> priya.n@email.com</div>
+            <div><strong>Date:</strong> 29 Sep 2026, 14:02</div>
+            <div class="subject">We have received your immigration enquiry — Ref INT-10482</div>
+          </div>
+          <div class="email-body">
+            <p>Dear Priya,</p>
+            <p>
+              Thank you for submitting your <strong>spouse visa extension</strong> enquiry through our client portal.
+              We have safely received your information and uploaded documents.
+            </p>
+            <p><strong>What happens next</strong></p>
+            <ul>
+              <li>A solicitor will review your summary and documents shortly</li>
+              <li>We will confirm next steps, any missing items, and engagement details</li>
+              <li>You can track this enquiry anytime in your portal</li>
+            </ul>
+            <a class="btn" href="#">Open your portal</a>
+            <p class="muted">
+              Reference: INT-10482 · This acknowledgment was logged on your matter timeline.
+              Please do not reply with attachments to this email — upload any further documents via the portal link above.
+            </p>
+            <p>Kind regards,<br />Client Care Team<br />[Your Firm Name]</p>
+          </div>
+        </div>
+      </div>
+
       <details class="faq">
         <summary>What does the solicitor see in the AI summary? (sample)</summary>
         <p>
@@ -513,6 +626,42 @@
               Updates, court papers you choose to share, emails of record, and messages stay in the portal.
               Overseas clients check progress in their own time zone. Sensitive matters can still request a call with a person.
             </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-mock">
+        <p class="label">Sample email Amy receives (step 4 — automated reminder)</p>
+        <div class="email-window">
+          <div class="email-chrome">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="app-name">Official firm email · Inbox</span>
+          </div>
+          <div class="email-meta">
+            <div><strong>From:</strong> cases@yourfirm.co.uk</div>
+            <div><strong>To:</strong> amy.w@email.com</div>
+            <div><strong>Date:</strong> 15 Mar 2026, 09:00</div>
+            <div class="subject">Reminder: document still needed — Matter FAM-2281</div>
+          </div>
+          <div class="email-body">
+            <p>Dear Amy,</p>
+            <p>
+              This is a friendly reminder that we are still waiting for the following document on your matter
+              <strong>FAM-2281</strong>:
+            </p>
+            <ul>
+              <li><strong>Marriage certificate</strong> — requested by your solicitor on 12 Mar</li>
+            </ul>
+            <p>
+              Please upload it via your client portal when you can, so we can keep your matter moving
+              without delay.
+            </p>
+            <a class="btn" href="#">Upload document in portal</a>
+            <p class="muted">
+              Reminder 1 of a scheduled follow-up · Also visible on your portal timeline.
+              If you have already uploaded this, you can ignore this message.
+            </p>
+            <p>Kind regards,<br />[Solicitor Name]<br />[Your Firm Name]</p>
           </div>
         </div>
       </div>
