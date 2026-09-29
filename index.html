@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intelligent Client Portal — Concept Brief</title>
+  <style>
+    :root {
+      --ink: #1a2332;
+      --muted: #5c6b7a;
+      --line: #e4e9ef;
+      --paper: #f7f5f1;
+      --card: #ffffff;
+      --accent: #1e4d6b;
+      --accent-soft: #e8f0f5;
+      --green: #1f6b4a;
+      --green-soft: #e6f4ee;
+      --amber: #8a5a12;
+      --amber-soft: #f8f0e4;
+      --step: #2c3e50;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+    header {
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.35rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin: 0 0 14px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 0;
+      max-width: 38em;
+    }
+    h2 {
+      font-size: 1.35rem;
+      margin: 40px 0 14px;
+      font-weight: 600;
+    }
+    h3 {
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    p { margin: 0 0 12px; }
+    .sans { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 8px;
+    }
+    @media (min-width: 640px) {
+      .grid.two { grid-template-columns: 1fr 1fr; }
+      .grid.three { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .card li { margin-bottom: 6px; }
+    .card ul { margin: 0; padding-left: 1.1em; }
+
+    .pill {
+      display: inline-block;
+      font-family: system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .pill.auto { background: var(--green-soft); color: var(--green); }
+    .pill.save { background: var(--amber-soft); color: var(--amber); }
+    .pill.bring { background: var(--accent-soft); color: var(--accent); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 20px 0 0;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+    .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .panel { display: none; margin-top: 16px; }
+    .panel.active { display: block; }
+
+    .flow {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 0;
+      margin: 16px 0 20px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+    .step:last-child { border-bottom: none; }
+    .n {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .step .who {
+      font-family: system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .step p { margin: 0; color: var(--ink); font-size: 0.98rem; }
+    .step .auto-tag {
+      display: inline-block;
+      margin-top: 6px;
+      font-family: system-ui, sans-serif;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .example-box {
+      background: var(--accent-soft);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 12px 0 20px;
+    }
+    .example-box h3 { color: var(--accent); }
+    .example-box p:last-child { margin-bottom: 0; }
+
+    .compare {
+      display: grid;
+      gap: 12px;
+    }
+    @media (min-width: 640px) {
+      .compare { grid-template-columns: 1fr 1fr; }
+    }
+    .compare .card h3 { margin-bottom: 10px; }
+
+    details.faq {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+    }
+    details.faq summary {
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+    }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::before {
+      content: "+ ";
+      color: var(--accent);
+    }
+    details.faq[open] summary::before { content: "– "; }
+    details.faq p { margin: 10px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .site-note {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--card);
+      border: 1px dashed var(--accent);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 20px 0;
+    }
+    .site-note strong {
+      display: block;
+      font-family: system-ui, sans-serif;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Concept brief · Live on your website</p>
+      <h1>Intelligent Client Portal</h1>
+      <p class="lead">
+        A simple, branded space on your website where new and existing clients start and follow their matter —
+        while the system does the chasing, summarising, and updating for your solicitors.
+      </p>
+      <p class="lead" style="margin-top:10px">
+        Built for <strong>Family</strong>, <strong>Immigration</strong>, and <strong>Tort</strong> —
+        as a client companion alongside LEAP / Clio, not a replacement for your team.
+      </p>
+    </header>
+
+    <!-- WHAT WE ACHIEVE -->
+    <h2>What this portal achieves</h2>
+    <div class="grid three sans">
+      <div class="card">
+        <span class="pill bring">For clients</span>
+        <ul>
+          <li>One trusted place for forms, documents, updates, and messages</li>
+          <li>No more hunting through Hotmail / Gmail for “where is my case?”</li>
+          <li>Works for overseas clients outside UK office hours</li>
+          <li>Clear next steps — what we need from them, and when</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="pill save">For solicitors</span>
+        <ul>
+          <li>AI short summary of intake + documents before you open the full pack</li>
+          <li>Know intent and gaps in minutes, not after reading everything</li>
+          <li>Fewer “any update?” calls — especially from HNW clients</li>
+          <li>Document chasing happens automatically, with a full history</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="pill auto">For the firm</span>
+        <ul>
+          <li>Lives on your website — easy for anyone to find and use</li>
+          <li>Consistent intake quality across Immigration, Family, Tort</li>
+          <li>Official email + portal stay in sync and trackable</li>
+          <li>Human support still available when clients need a person</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AUTOMATED VS TIME SAVED -->
+    <h2>What gets automated vs what saves solicitor time</h2>
+    <div class="compare sans">
+      <div class="card">
+        <span class="pill auto">Automated by the portal</span>
+        <ul>
+          <li>Guided intake forms by practice area (branching questions)</li>
+          <li>Document upload checklist for each case type</li>
+          <li>AI case summary (few lines) + document overview for the solicitor</li>
+          <li>Instant acknowledgment to client (portal + official email)</li>
+          <li>Reminders if requested docs are not received (e.g. after 3 days, then again)</li>
+          <li>Timeline logging: who was reminded, when, how many times</li>
+          <li>Status updates visible to the client when you mark a stage</li>
+          <li>Payment prompts / confirmation hand-off into messaging</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="pill save">Time you get back</span>
+        <ul>
+          <li>No re-reading long unstructured emails to understand a new matter</li>
+          <li>No manually chasing missing passports, statements, certificates</li>
+          <li>No repeating the same status over the phone</li>
+          <li>Incomplete files filtered before they hit your desk</li>
+          <li>You focus on advice, strategy, and sensitive conversations</li>
+          <li>Clear audit: e.g. “Amy received follow-up reminder 4 times on these dates”</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-note sans">
+      <div>
+        <strong>Live on your website</strong>
+        <p style="margin:0;color:var(--muted)">
+          Clients open your site → choose <em>New client</em> or <em>Existing client</em> → the portal guides them.
+          No app install. Mobile-friendly. Same brand, same trust — with automation behind the scenes.
+        </p>
+      </div>
+    </div>
+
+    <!-- TWO CASES -->
+    <h2>How it works — two paths</h2>
+    <p style="color:var(--muted);margin-bottom:0">
+      Click a path below. Each includes a real example so you can see the journey end to end.
+    </p>
+
+    <div class="tabs sans" role="tablist">
+      <button class="tab-btn active" type="button" data-tab="new" aria-selected="true">New client</button>
+      <button class="tab-btn" type="button" data-tab="existing" aria-selected="false">Existing client</button>
+    </div>
+
+    <!-- NEW CLIENT PANEL -->
+    <section id="panel-new" class="panel active" role="tabpanel">
+      <div class="example-box">
+        <h3>Example — New immigration client</h3>
+        <p>
+          Someone visits your website wanting help with a <strong>spouse visa extension</strong>.
+          They have never instructed you before. Instead of emailing a long story and attachments,
+          they open the portal and follow a short, clear path.
+        </p>
+      </div>
+
+      <h3 class="sans" style="margin-top:8px">New client workflow</h3>
+      <div class="flow">
+        <div class="step">
+          <div class="n">1</div>
+          <div>
+            <div class="who">Client · Website</div>
+            <p>Opens your site → <strong>New client</strong> → selects <strong>Immigration</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>
+            <div class="who">Client · Smart form</div>
+            <p>
+              Answers the questions a solicitor actually needs: who they are, visa type, immigration history,
+              dependants, leave expiry / urgency, sponsorship details if relevant.
+              Follow-up questions adapt (so they are not asked irrelevant things).
+            </p>
+            <span class="auto-tag">Automated · branching intake</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>
+            <div class="who">Client · Documents</div>
+            <p>
+              Uploads what the matter needs — passport pages, Home Office letters, relationship evidence,
+              bank statements, any forms you require. Checklist shows what is still missing.
+            </p>
+            <span class="auto-tag">Automated · document checklist</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>
+            <div class="who">Portal · AI brief</div>
+            <p>
+              On submit, the solicitor receives a <strong>few-line AI summary</strong>: intent of the case,
+              key facts, urgency, and obvious gaps — plus an indexed list of documents —
+              without reading every page first.
+            </p>
+            <span class="auto-tag">Automated · AI summary for solicitor</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">5</div>
+          <div>
+            <div class="who">Portal + official email</div>
+            <p>
+              Client gets an immediate acknowledgment: we have received your enquiry;
+              a solicitor will review; here is what happens next. Everything is logged and trackable.
+            </p>
+            <span class="auto-tag">Automated · acknowledgment</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">6</div>
+          <div>
+            <div class="who">Solicitor</div>
+            <p>
+              Reads the short brief, understands intent in minutes, replies with confirmation,
+              any extra documents needed, and payment / engagement next steps —
+              via portal (and email). Client sees it in one thread.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">7</div>
+          <div>
+            <div class="who">Both sides</div>
+            <p>
+              Once the case is accepted and payment is done, messaging continues in the portal.
+              Status, documents, and history stay in one place — not scattered across inboxes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <details class="faq">
+        <summary>What does the solicitor see in the AI summary? (sample)</summary>
+        <p>
+          “Applicant seeks spouse visa extension; in UK; British partner. Leave expires in ~9 weeks.
+          No refusals disclosed. Relationship evidence uploaded. <strong>Gaps:</strong> last 6 months’
+          bank statements and English language certificate missing. <strong>Suggested next step:</strong>
+          acknowledge, request gaps, send engagement + fee link.”
+        </p>
+      </details>
+      <details class="faq">
+        <summary>Same idea for Family or Tort?</summary>
+        <p>
+          Yes — different question packs and document lists. Family can branch on sensitive points
+          (e.g. whether a partner knows about a divorce). Tort focuses on incident details, limitation risk,
+          and evidence. The workflow shape stays the same.
+        </p>
+      </details>
+    </section>
+
+    <!-- EXISTING CLIENT PANEL -->
+    <section id="panel-existing" class="panel" role="tabpanel">
+      <div class="example-box">
+        <h3>Example — Existing family client (“Amy”)</h3>
+        <p>
+          Amy already has a matter with you. She needs to send a document the solicitor asked for,
+          and she wants to know what is happening — without calling the office or searching old emails.
+        </p>
+      </div>
+
+      <h3 class="sans" style="margin-top:8px">Existing client workflow</h3>
+      <div class="flow">
+        <div class="step">
+          <div class="n">1</div>
+          <div>
+            <div class="who">Client · Website</div>
+            <p>Opens your site → <strong>Existing client</strong> → enters <strong>client / matter number</strong> and verifies (e.g. secure code).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>
+            <div class="who">Client · Dashboard</div>
+            <p>
+              Sees case status in plain language, outstanding tasks, shared documents,
+              messages, and payments — a single reference point for a long-running matter.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>
+            <div class="who">Solicitor · Request</div>
+            <p>
+              Solicitor asks for an additional document (e.g. marriage certificate) through the portal.
+              Amy is notified in the portal and by official email.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>
+            <div class="who">Portal · Reminders</div>
+            <p>
+              If nothing is received after <strong>3 days</strong>, a reminder goes straight to Amy.
+              Reminders can repeat on a set schedule. The portal timeline records every chase —
+              e.g. <em>“Amy received follow-up reminder 4 times on [dates].”</em>
+            </p>
+            <span class="auto-tag">Automated · chase reminders + history</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">5</div>
+          <div>
+            <div class="who">Client · Upload</div>
+            <p>Amy uploads the document when ready. Completeness updates. Solicitor is notified that the file is ready to review again.</p>
+            <span class="auto-tag">Automated · ready-for-review signal</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">6</div>
+          <div>
+            <div class="who">Both sides · Ongoing</div>
+            <p>
+              Updates, court papers you choose to share, emails of record, and messages stay in the portal.
+              Overseas clients check progress in their own time zone. Sensitive matters can still request a call with a person.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <details class="faq">
+        <summary>Sample timeline Amy (and the solicitor) would see</summary>
+        <p>
+          12 Mar — Solicitor requested marriage certificate · email + portal notice sent<br />
+          15 Mar — Automated reminder #1<br />
+          18 Mar — Automated reminder #2<br />
+          21 Mar — Automated reminder #3<br />
+          24 Mar — Automated reminder #4<br />
+          25 Mar — Amy uploaded marriage certificate · matter marked ready for review
+        </p>
+      </details>
+      <details class="faq">
+        <summary>Why this reduces office noise</summary>
+        <p>
+          Status-check calls drop because the answer is already on the dashboard.
+          Solicitors stop being the reminder system. History is visible if anyone asks
+          “did we chase them?” — yes, and here’s when.
+        </p>
+      </details>
+    </section>
+
+    <!-- EASY + AUTOMATABLE -->
+    <h2>Why this is easy to use — and highly automatable</h2>
+    <div class="grid two sans">
+      <div class="card">
+        <h3>Easy for clients</h3>
+        <ul>
+          <li>Found on your website — no new app to install</li>
+          <li>Two clear buttons: new or existing</li>
+          <li>Guided steps; only relevant questions</li>
+          <li>Works on phone; helpful for clients abroad</li>
+          <li>“Speak to someone” still available when needed</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Automatable for the firm</h3>
+        <ul>
+          <li>Intake → AI brief → acknowledge → chase → update</li>
+          <li>Rules you set once (e.g. remind after 3 days)</li>
+          <li>Sits beside LEAP / Clio as the client-facing layer</li>
+          <li>Email and portal stay aligned and auditable</li>
+          <li>You only step in for advice and decisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card sans" style="margin-top:16px">
+      <h3>Note on “real time” (Home Office / sponsor licence)</h3>
+      <p style="margin:0;color:var(--muted)">
+        Clients can see <strong>your matter progress</strong> as soon as your team updates it.
+        Live Home Office application status depends on what integrations are actually available —
+        we should confirm that before promising it. Firm-managed timelines
+        (e.g. a ~10 working-day sponsor licence window) can still be shown clearly in the portal.
+      </p>
+    </div>
+
+    <footer>
+      Intelligent Client Portal · Concept for discussion · Family · Immigration · Tort<br />
+      Open this file in any browser to present interactively. Switch the tabs above to walk through each path.
+    </footer>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".tab-btn");
+    const panels = {
+      new: document.getElementById("panel-new"),
+      existing: document.getElementById("panel-existing"),
+    };
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tab = btn.dataset.tab;
+        buttons.forEach((b) => {
+          b.classList.toggle("active", b === btn);
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+        Object.entries(panels).forEach(([key, el]) => {
+          el.classList.toggle("active", key === tab);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
